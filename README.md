@@ -2,6 +2,9 @@
 Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
 
 We provide the experimental procedures for CIFAR-10 with IPC=500, CIFAR-100 with IPC=50, and Tiny-ImageNet with IPC=100 in the form of Jupyter Notebook files.
+- ccfs_cifar10_ipc500.ipynb: CCFS on CIFAR-10 with IPC=500 (compression ratio=10%)
+- ccfs_cifar100_ipc50.ipynb: CCFS on CIFAR-100 with IPC=50 (compression ratio=10%)
+- ccfs_tiny_ipc100.ipynb: CCFS on Tiny-ImageNet with IPC=100 (compression ratio=20%)
 
 ![Architecture](./figures/architecture.png)
 
