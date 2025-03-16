@@ -1,6 +1,6 @@
 <div align="center">
     <h2>
-    SelectIT: Selective Instruction Tuning for Large Language Models via Uncertainty-Aware Self-Reflection <br><br>
+    Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation <br><br>
     </h2>
 </div>
 
