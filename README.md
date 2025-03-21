@@ -80,7 +80,7 @@ CUDA_VISIBLE_DEVICES=0, python ccfs_tiny.py \
     --score forgetting --score-path ./scores/forgetting_Tiny.npy \
     --output-dir ./selection_logs --num-eval 5
 ```
-To facilitate experiments running, we provide [`scripts`](github_scripts/) for running the bulk experiments in the paper:
+To facilitate experiments running, we provide [`scripts`](scripts/) for running the bulk experiments in the paper:
 
 ```shell
 sh ./scripts/ccfs_tiny.sh
