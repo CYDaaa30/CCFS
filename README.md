@@ -25,31 +25,86 @@ torch==2.2.1
 torchvision==0.17.1
 tqdm==4.66.2
 ```
+### Preparation
+
+To conduct a single experiment, you need to prepare a teacher checkpoint for relabeling, difficulty scores for corresponding dataset and already distilled data structured in the following format:
+
+```
+/path/to/distilled_dataset/
+├── 00000/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+├── 00001/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+├── 00002/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+```
+
+The `c-scores` for CIFAR10/100 and the `forgetting scores` for CIFAR10/100 and Tiny-ImageNet are provided in [`scores/`](scores/).
+
+Follow the squeeze instructions in `SRe2L` ([CIFAR](https://github.com/VILA-Lab/SRe2L/blob/main/SRe2L/*small_dataset/README_CIFAR.md) / [Tiny-ImageNet](https://github.com/VILA-Lab/SRe2L/blob/main/SRe2L/*small_dataset/README_TINY.md)) to train the teacher model ResNet-18:
+
+| **Dataset**    | **Backbone**        | **epochs**      | **acc@1(last)**   | **Input Size**   |
+| -------------- | ------------------- | --------------- | ----------------- | ---------------- |
+| CIFAR10        | ResNet18 (modified) | 200             | 95.56             | 32 $\times$ 32   |
+| CIFAR100       | ResNet18 (modified) | 200             | 78.72             | 32 $\times$ 32   |
+| Tiny-ImageNet  | ResNet18 (modified) | 200             | 60.50             | 64 $\times$ 64   |
+
+In the main table of our paper, we used distilled data synthesized by [`CDA`](https://github.com/VILA-Lab/SRe2L/tree/main/CDA). 
+Note that `CCFS` can be extended to most dataset distillation methods, as long as you have the distilled data and organize it into the image folder structure.
+We encourage adopting different distilled data by other DD methods and configuring corresponding data augmentation and training settings to verify the scalability of `CCFS`.
+
 ### How to Run
+For the 3 small datasets (CIFAR-10/100, Tiny-ImageNet), we provide single GPU implementation of `CCFS`. Run the following command to conduct CCFS on Tiny-ImageNet with IPC = 50:
 
-To conduct a curriculum coarse-to-fine selection based on the distilled data, you need to prepare a distilled images folder, a relabel teacher checkpoint, and difficulty scores for corresponding dataset.
+```shell
+CUDA_VISIBLE_DEVICES=0, python ccfs_tiny.py \
+    --data-path /path/to/Tiny-ImageNet/ --filter-model resnet18 --teacher-model resnet18 \
+    --teacher-path ./checkpoints/resnet18_tiny_200epochs.pth  --eval-model resnet18 \
+    --device cuda --batch-size 64 --epochs 100 --opt sgd --lr 0.2 --momentum 0.9 --weight-decay 1e-4 \
+    --lr-scheduler cosineannealinglr --lr-warmup-epochs 5 --lr-warmup-method linear --lr-warmup-decay 0.01 \
+    --distill-data-path ./syn-data/cda_tiny_rn18_4k_ipc100 \
+    -T 20 --image-per-class 50 --alpha 0.2 --curriculum-num 3 \
+    --select-misclassified --select-method simple --balance \
+    --score forgetting --score-path ./scores/forgetting_Tiny.npy \
+    --output-dir ./selection_logs --num-eval 5
+```
+To facilitate experiments running, we provide [`scripts`](github_scripts/) for running the bulk experiments in the paper:
 
-Difficulty scores for the 3 datasets are provided in scores/.
+```shell
+sh ./scripts/ccfs_tiny.sh
+```
 
-The teacher checkpoints can be download here:
+After running, the selected real image indices will be stored as `selected_indices.json`. The experiment configurations will also be saved as `exp_log.txt`.
 
-CCFS can be extended to almost all dataset distillation methods, as long as you have a copy of the already distilled data and organize it into an image folder structure.
-In the main table of our paper, we used the distilled data by the CDA method, you can download the data here. 
-We encourage adopting different distilled data by other DD methods and configuring corresponding data augmentation and training settings to verify the scalability of CCFS.
+To quickly validate the performance of the synthetic dataset without the relabel process, we provide validation code with naive KD following [SRe2L](https://github.com/VILA-Lab/SRe2L/blob/main/SRe2L/validate/README.md). Set `--selected_indices_path` to the correct `selected_indices.json` file and run the following command to conduct a quick validation on Tiny-ImageNet with IPC = 50:
 
-## How to Run
-Since the ß
+```shell
+CUDA_VISIBLE_DEVICES=0, python eval_tiny.py \
+    --data-path /path/to/Tiny-ImageNet/ --eval-model resnet18 \
+    --teacher-model resnet18 --teacher-path ./checkpoints/resnet18_tiny_200epochs.pth \
+    --device cuda --batch-size 64 --epochs 100 --opt sgd --lr 0.2 --momentum 0.9 --weight-decay 1e-4 -T 20 \
+    --lr-scheduler cosineannealinglr --lr-warmup-epochs 5 --lr-warmup-method linear --lr-warmup-decay 0.01 \
+    --distill-data-path ./syn-data/cda_tiny_rn18_4k_ipc100 \
+    --selected_indices_path ./selection_logs/Tiny/selected_indices.json \
+    --image-per-class 50 --num-eval 5
+```
 
-# CCFS
-Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
+## Results
+Performance of CCFS compared to the SOTA dataset distillation and coreset selection baselines.
 
-We provide the experimental procedures for CIFAR-10 with IPC=500, CIFAR-100 with IPC=50, and Tiny-ImageNet with IPC=100 in the form of Jupyter Notebook files.
-- ccfs_cifar10_ipc500.ipynb: CCFS on CIFAR-10 with IPC=500 (compression ratio=10%)
-- ccfs_cifar100_ipc50.ipynb: CCFS on CIFAR-100 with IPC=50 (compression ratio=10%)
-- ccfs_tiny_ipc100.ipynb: CCFS on Tiny-ImageNet with IPC=100 (compression ratio=20%)
+<div align="center">
+    <img width="80%" alt="Results" src="./figures/results.png">
+</div>
 
-![Architecture](./figures/architecture.png)
-
-**Architecture of our curriculum coarse-to-fine selection method for high-IPC dataset distillation, CCFS.** CCFS adopts a combination of distilled and real data to construct the final synthetic dataset. We apply a curriculum framework and select the optimal real data for the current synthetic dataset in each curriculum. (a) **Curriculum selection framework**: CCFS begins the curriculum with the already distilled data as the initial synthetic dataset. Then continuously incorporates real data into the current synthetic dataset through the coarse-to-fine selection within each curriculum phase. (b) **Coarse-to-fine selection strategy**: In the coarse stage, CCFS trains a filter model on the current synthetic dataset and evaluates it on the original dataset excluding already selected data to filter out all correctly classified samples. In the fine stage, CCFS selects the simplest misclassified samples and incorporates them into the current synthetic dataset for the next curriculum.
-
-![Results](./figures/results.png)
