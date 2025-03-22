@@ -64,7 +64,7 @@ Follow the squeeze instructions in `SRe2L` ([CIFAR](https://github.com/VILA-Lab/
 
 | **Dataset**    | **Backbone**        | **epochs**      | **acc@1(last)**   | **Input Size**   |
 | -------------- | ------------------- | --------------- | ----------------- | ---------------- |
-| CIFAR10        | ResNet18 (modified) | 200             | 95.56             | 32 $\times$ 32   |
+| CIFAR10        | ResNet18 (modified) | 200             | 95.53             | 32 $\times$ 32   |
 | CIFAR100       | ResNet18 (modified) | 200             | 78.72             | 32 $\times$ 32   |
 | Tiny-ImageNet  | ResNet18 (modified) | 200             | 60.50             | 64 $\times$ 64   |
 
