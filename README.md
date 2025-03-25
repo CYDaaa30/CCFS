@@ -1,6 +1,6 @@
 # Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
 
-Yanda Chen, Gongwei Chen, Miao Zhang, Weili Guan, Liqiang Nie
+Yanda Chen, Gongwei Chen, [Miao Zhang](https://miaozhang0525.github.io/), Weili Guan, [Liqiang Nie](https://liqiangnie.github.io/)
 
 [`arXiv`](https://arxiv.org/abs/2503.18872) | [`BibTeX`](#bibliography)
 
