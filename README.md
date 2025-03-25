@@ -1,5 +1,7 @@
 # Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
 
+[`arXiv`](https://arxiv.org/abs/2503.18872) | [`BibTeX`](#bibliography)
+
 <div align="center">
     <img width="80%" alt="CCFS-Architecture" src="./figures/architecture.png">
 </div>
@@ -115,3 +117,18 @@ Performance of CCFS compared to the SOTA dataset distillation and coreset select
     <img width="80%" alt="Results" src="./figures/results.png">
 </div>
 
+## Bibliography
+
+If you find this repository helpful for your project, please consider citing our work:
+
+```
+@misc{chen2025curriculumcoarsetofineselectionhighipc,
+      title={Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation}, 
+      author={Yanda Chen and Gongwei Chen and Miao Zhang and Weili Guan and Liqiang Nie},
+      year={2025},
+      eprint={2503.18872},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2503.18872}, 
+}
+```
