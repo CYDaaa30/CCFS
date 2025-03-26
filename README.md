@@ -124,13 +124,10 @@ Performance of CCFS compared to the SOTA dataset distillation and coreset select
 If you find this repository helpful for your project, please consider citing our work:
 
 ```
-@misc{chen2025curriculumcoarsetofineselectionhighipc,
-      title={Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation}, 
-      author={Yanda Chen and Gongwei Chen and Miao Zhang and Weili Guan and Liqiang Nie},
-      year={2025},
-      eprint={2503.18872},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2503.18872}, 
+@article{chen2025ccfs,
+  title={Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation}, 
+  author={Chen, Yanda and Chen, Gongwei and Zhang, Miao and Guan, Weili and Nie, Liqiang},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2025}
 }
 ```
