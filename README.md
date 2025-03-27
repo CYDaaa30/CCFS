@@ -75,7 +75,7 @@ Follow the squeeze instructions in `SRe2L` ([CIFAR](https://github.com/VILA-Lab/
 You can download the teacher model used in our experiments [here](https://huggingface.co/CYDaaa/CCFS_teacher_checkpoints/tree/main).
 
 In the main table of our paper, we used distilled data synthesized by [`CDA`](https://github.com/VILA-Lab/SRe2L/tree/main/CDA). 
-You can download these distilled data [here](https://huggingface.co/datasets/CYDaaa/CCFS_distilled_data/tree/main).
+You can download the distilled data used in our experiments [here](https://huggingface.co/datasets/CYDaaa/CCFS_distilled_data/tree/main).
 
 Note that `CCFS` can be extended to most dataset distillation methods, as long as you have the distilled data and organize it into the image folder structure.
 We encourage adopting different distilled data by other DD methods and configuring corresponding data augmentation and training settings to verify the scalability of `CCFS`.
