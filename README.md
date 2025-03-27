@@ -66,13 +66,17 @@ The `c-scores` for CIFAR10/100 and the `forgetting scores` for CIFAR10/100 and T
 
 Follow the squeeze instructions in `SRe2L` ([CIFAR](https://github.com/VILA-Lab/SRe2L/blob/main/SRe2L/*small_dataset/README_CIFAR.md) / [Tiny-ImageNet](https://github.com/VILA-Lab/SRe2L/blob/main/SRe2L/*small_dataset/README_TINY.md)) to train the teacher model ResNet-18:
 
-| **Dataset**    | **Backbone**        | **epochs**      | **acc@1(last)**   | **Input Size**   |
-| -------------- | ------------------- | --------------- | ----------------- | ---------------- |
-| CIFAR10        | ResNet18 (modified) | 200             | 95.53             | 32 $\times$ 32   |
+| **Dataset**    | **Backbone**        | **epochs**      | **acc@1(last)**   | **Input Size**   | 
+| -------------- | ------------------- | --------------- | ----------------- | ---------------- | 
+| CIFAR10        | ResNet18 (modified) | 200             | 95.53             | 32 $\times$ 32   | 
 | CIFAR100       | ResNet18 (modified) | 200             | 78.72             | 32 $\times$ 32   |
 | Tiny-ImageNet  | ResNet18 (modified) | 200             | 60.50             | 64 $\times$ 64   |
 
+You can download the teacher model used in our experiments [here](https://huggingface.co/CYDaaa/CCFS_teacher_checkpoints/tree/main).
+
 In the main table of our paper, we used distilled data synthesized by [`CDA`](https://github.com/VILA-Lab/SRe2L/tree/main/CDA). 
+You can download these distilled data [here](https://huggingface.co/datasets/CYDaaa/CCFS_distilled_data/tree/main).
+
 Note that `CCFS` can be extended to most dataset distillation methods, as long as you have the distilled data and organize it into the image folder structure.
 We encourage adopting different distilled data by other DD methods and configuring corresponding data augmentation and training settings to verify the scalability of `CCFS`.
 
