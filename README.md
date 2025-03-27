@@ -21,7 +21,7 @@ Notably, CCFS achieves 60.2\% test accuracy on ResNet-18 with a 20\% compression
 
 ## TODOs
 
-- [ ] Teacher checkpoints and CDA distilled data. ![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)
+- [x] Teacher checkpoints and CDA distilled data. ![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)
 - [ ] Eval scripts.
 - [x] Citation.
 - [x] Author link.
